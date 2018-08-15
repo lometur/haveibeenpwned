@@ -8,6 +8,7 @@ import (
 	"time"
 	"io/ioutil"
 	"encoding/json"
+	"net/url"
 )
 
 type Breach struct {
@@ -56,7 +57,7 @@ func verbose_print (message string) {
 func get_response (email string) {
 	var breach *Breach
 
-	endpoint := fmt.Sprintf("%v/%v",APIURI,email)
+	endpoint := fmt.Sprintf(APIURI,url.QueryEscape(email))
 	d_log(fmt.Sprintf("endpoint: %v", endpoint))
 	client := &http.Client {
 		Timeout: 15 * time.Second,

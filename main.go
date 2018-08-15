@@ -7,13 +7,13 @@ import (
 )
 
 // MAJOR RELEASE . MAJOR FEATURE/MAJOR FIX . MINOR FEATURE/MINOR FIX
-var CURRENT_VERSION = "1.0.0"
+var CURRENT_VERSION = "1.0.1"
 var DEBUG	= flag.BoolP("debug","d",false, "Turns debug on (turns off logging)")
 var VERSION	= flag.BoolP("version","V",false, "Displays the current version")
 var HELP    = flag.BoolP("help","h",false, "Displays this help message")
 var VERBOSE = flag.BoolP("verbose","v",false, "Gives more information about breaches")
 
-const APIURI = "https://haveibeenpwned.com/api/v2/breachedaccount"
+const APIURI = "https://haveibeenpwned.com/api/v2/breachedaccount/%s?includeUnverified=true"
 
 func main() {
 
