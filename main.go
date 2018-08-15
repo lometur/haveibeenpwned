@@ -7,7 +7,7 @@ import (
 )
 
 // MAJOR RELEASE . MAJOR FEATURE/MAJOR FIX . MINOR FEATURE/MINOR FIX
-var CURRENT_VERSION = "1.0.1"
+var CURRENT_VERSION = "1.0.2"
 var DEBUG	= flag.BoolP("debug","d",false, "Turns debug on (turns off logging)")
 var VERSION	= flag.BoolP("version","V",false, "Displays the current version")
 var HELP    = flag.BoolP("help","h",false, "Displays this help message")

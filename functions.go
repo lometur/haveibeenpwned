@@ -9,6 +9,7 @@ import (
 	"io/ioutil"
 	"encoding/json"
 	"net/url"
+	"strconv"
 )
 
 type Breach struct {
@@ -105,14 +106,13 @@ func print_response (breaches []Breach, email string) {
 	breach_num := 1
 	for _, breach := range breaches {
 
-		fmt.Printf("Breach: %v\n", breach_num)
-		verbose_print(fmt.Sprintf("\tTitle: %v", breach.Name))
-		fmt.Printf("\tName: %v\n", breach.Name)
+		fmt.Printf("Breach: %v - %v\n", breach_num, breach.Name)
+		verbose_print(fmt.Sprintf("\tTitle: %v", breach.Title))
 		fmt.Printf("\tDomain: %v\n", breach.Domain)
 		fmt.Printf("\tBreach Date: %v\n", breach.BreachDate)
-		verbose_print(fmt.Sprintf("\tAdded Date: %v", breach.AddedDate))
+		fmt.Printf("\tAdded Date: %v\n", breach.AddedDate)
 		verbose_print(fmt.Sprintf("\tModified Date: %v", breach.ModifiedDate))
-		verbose_print(fmt.Sprintf("\tPwn Count: %v", breach.PwnCount))
+		fmt.Printf("\tPwn Count: %v\n", CommifyNumber(breach.PwnCount))
 		verbose_print(fmt.Sprintf("\tDescription: %v", breach.Description))
 		verbose_print(fmt.Sprintf("\tData Classes: %v", get_data_classes(breach.DataClasses)))
 		fmt.Printf("\tIs Verified: %v\n", breach.IsVerified)
@@ -137,4 +137,24 @@ func get_data_classes (DataClasses []string) (data_classes string) {
 	data_classes = strings.TrimRight(tmp,", ")
 
 	return data_classes
+}
+
+//CommifyNumber takes a number and returns a string with the number using comma separators
+func CommifyNumber(n int64) string {
+	in := strconv.FormatInt(n, 10)
+	out := make([]byte, len(in)+(len(in)-2+int(in[0]/'0'))/3)
+	if in[0] == '-' {
+		in, out[0] = in[1:], '-'
+	}
+
+	for i, j, k := len(in)-1, len(out)-1, 0; ; i, j = i-1, j-1 {
+		out[j] = in[i]
+		if i == 0 {
+			return string(out)
+		}
+		if k++; k == 3 {
+			j, k = j-1, 0
+			out[j] = ','
+		}
+	}
 }
